@@ -1,14 +1,18 @@
 const express = require('express');
 const path = require('path');
-const rootPath = require('./utils/path');
 const bodyParser = require('body-parser');
-const adminRoutes = require('./routes/admin');
+const rootPath = require('./utils/path');
+const {router} = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
 const app = express();
 
+// Middleware
 app.use(bodyParser.urlencoded());
-app.use('/admin', adminRoutes);
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Routes Middleware
+app.use('/admin', router);
 app.use(shopRoutes);
 
 // 404 (if nothing matches then show this)
