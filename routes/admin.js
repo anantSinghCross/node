@@ -7,7 +7,7 @@ const router = express.Router();
 const savedData = [];
 
 router.get('/product-form', (req, res, next) => {
-    res.sendFile(path.join(rootPath, 'views', 'add-product.html'));
+    res.render('add-product', {docTitle: 'Add Products'});
 })
 
 router.post('/add-product', (req, res, next) => {

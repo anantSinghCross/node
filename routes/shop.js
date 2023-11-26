@@ -6,7 +6,7 @@ const {savedData} = require('./admin')
 
 router.get('/home', (req, res, next) => {
     console.log(savedData)
-    res.sendFile(path.join(rootPath, 'views', 'shop.html'));
+    res.render('shop', {docTitle: 'Products'});
 })
 
 module.exports = router;
