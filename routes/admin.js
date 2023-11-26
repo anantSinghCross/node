@@ -12,7 +12,7 @@ router.get('/product-form', (req, res, next) => {
 
 router.post('/add-product', (req, res, next) => {
     savedData.push(req.body);
-    res.send(req.body);
+    res.redirect('/home');
 })
 
 module.exports = {router, savedData};

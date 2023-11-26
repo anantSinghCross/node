@@ -6,7 +6,7 @@ const {savedData} = require('./admin')
 
 router.get('/home', (req, res, next) => {
     console.log(savedData)
-    res.render('shop', {docTitle: 'Products'});
+    res.render('shop', {docTitle: 'Products', products: savedData});
 })
 
 module.exports = router;
