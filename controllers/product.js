@@ -11,8 +11,9 @@ const addProduct = (req, res, next) => {
 }
 
 const getHome =  (req, res, next) => {
-    const products = Product.fetchAll();
-    res.render('shop', {docTitle: 'Products', products: products});
+    Product.fetchAll(products => {
+        res.render('shop', {docTitle: 'Products', products: products});
+    });
 }
 
 module.exports = {
