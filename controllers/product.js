@@ -1,7 +1,7 @@
 const Product = require('../models/product');
 
 const getAddProduct = (req, res, next) => {
-    res.render('add-product', {docTitle: 'Add Products'});
+    res.render('admin/add-product', {docTitle: 'Add Products'});
 }
 
 const addProduct = (req, res, next) => {
@@ -12,7 +12,7 @@ const addProduct = (req, res, next) => {
 
 const getHome =  (req, res, next) => {
     Product.fetchAll(products => {
-        res.render('shop', {docTitle: 'Products', products: products});
+        res.render('shop/product-list', {docTitle: 'Products', products: products});
     });
 }
 
