@@ -10,6 +10,19 @@ exports.getProducts = (req, res, next) => {
   });
 };
 
+exports.getProduct = (req, res, next) => {
+  console.log('Product ID : ', req.params.productId);
+  Product.findById(req.params.productId, product => {
+    res.render('shop/product-detail', {
+      product: product,
+      pageTitle: 'Product',
+      path: '/product'
+    });
+  })
+}
+
+// TODO: add a function to add items to cart
+
 exports.getIndex = (req, res, next) => {
   Product.fetchAll(products => {
     res.render('shop/index', {

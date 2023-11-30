@@ -7,18 +7,19 @@ const p = path.join(
   'products.json'
 );
 
-const getProductsFromFile = cb => {
+const getProductsFromFile = callback => {
   fs.readFile(p, (err, fileContent) => {
     if (err) {
-      cb([]);
+      callback([]);
     } else {
-      cb(JSON.parse(fileContent));
+      callback(JSON.parse(fileContent));
     }
   });
 };
 
 module.exports = class Product {
   constructor(title, imageUrl, description, price) {
+    this.id = Math.trunc(Math.random()*10000);
     this.title = title;
     this.imageUrl = imageUrl;
     this.description = description;
@@ -34,7 +35,14 @@ module.exports = class Product {
     });
   }
 
-  static fetchAll(cb) {
-    getProductsFromFile(cb);
+  static fetchAll(callback) {
+    getProductsFromFile(callback);
+  }
+
+  static findById(id, callback){
+    getProductsFromFile((products) => {
+      const reqProduct = products.find(product => product.id == id);
+      callback(reqProduct);
+    });
   }
 };
