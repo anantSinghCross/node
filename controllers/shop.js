@@ -22,6 +22,7 @@ exports.getProduct = (req, res, next) => {
 }
 
 // TODO: add a function to add items to cart
+// TODO: add a cart model
 
 exports.getIndex = (req, res, next) => {
   Product.fetchAll(products => {
