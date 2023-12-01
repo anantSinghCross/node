@@ -9,8 +9,6 @@
     <%= product.id %> 
     <br/>
     <%= product.title %>
-    <form action="/cart" method="post">
-        <button class="btn" type="submit">Add to Cart 🛒</button>
-    </form>
+    <%- include('../includes/cart-btn.ejs') %>
 </body>
 </html>

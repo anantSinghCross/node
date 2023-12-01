@@ -10,6 +10,9 @@ exports.getAddProduct = (req, res, next) => {
   });
 };
 
+// TODO : Add functionality to edit a product (reuse the add product form for this)
+// TODO : Add delete functionality
+
 exports.postAddProduct = (req, res, next) => {
   const title = req.body.title;
   const imageUrl = req.body.imageUrl;
