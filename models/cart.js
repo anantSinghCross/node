@@ -7,16 +7,6 @@ const p = path.join(
   'cart.json'
 );
 
-const getItemsFromFile = callback => {
-  fs.readFile(p, (err, fileContent) => {
-    if (err) {
-      callback([]);
-    } else {
-      callback(JSON.parse(fileContent));
-    }
-  });
-};
-
 module.exports = class Cart {
   static addToCart(id, price) {
     // Get the older cart items
