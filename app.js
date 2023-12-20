@@ -2,9 +2,9 @@ const path = require('path');
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const errorController = require('./controllers/error');
-const mongoConnect = require('./util/database').mongoConnect;
 const User = require('./models/user');
 
 const app = express();
@@ -32,6 +32,10 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-mongoConnect(() => {
-  app.listen(3000);
-});
+console.log('\nConnecting to MongoDB...')
+mongoose.connect('mongodb+srv://admin-user:mongocluster@notes.mau7f.mongodb.net/shop?retryWrites=true&w=majority')
+  .then(result => {
+    app.listen(3000);
+    console.log('Connection established. Server is running...')
+  })
+  .catch(err => console.error(err));
