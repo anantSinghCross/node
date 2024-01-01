@@ -3,6 +3,7 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const session = require('express-session');
 
 const errorController = require('./controllers/error');
 const User = require('./models/user');
@@ -14,13 +15,16 @@ app.set('views', 'views');
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
+const authRoutes = require('./routes/auth');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(
+  session({ secret: 'my secret', resave: false, saveUninitialized: false })
+);
 
 app.use((req, res, next) => {
-  User.findById('65832302f3c76206178bde71')
-    .exec()
+  User.findById('5bab316ce0a7c75f783cb8a8')
     .then(user => {
       req.user = user;
       next();
@@ -28,32 +32,31 @@ app.use((req, res, next) => {
     .catch(err => console.log(err));
 });
 
-// ROUTES ----
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
+app.use(authRoutes);
+
 app.use(errorController.get404);
 
-// CONNECTION ----
-console.log('\nConnecting to MongoDB...')
-mongoose.connect('mongodb+srv://admin-user:mongocluster@notes.mau7f.mongodb.net/shop?retryWrites=true&w=majority')
+mongoose
+  .connect(
+    'mongodb+srv://maximilian:9u4biljMQc4jjqbe@cluster0-ntrwp.mongodb.net/shop?retryWrites=true'
+  )
   .then(result => {
-    return User.findOne().exec()
-  })
-  .then(user => {
-    console.log(user)
-    if(!user){
-      const user = new User({
-        name: 'Anant',
-        email: 'anant.singh@gmail.com',
-        cart: {
-          items: []
-        }
-      });
-      return user.save();
-    }
-  })
-  .then(() => {
+    User.findOne().then(user => {
+      if (!user) {
+        const user = new User({
+          name: 'Max',
+          email: 'max@test.com',
+          cart: {
+            items: []
+          }
+        });
+        user.save();
+      }
+    });
     app.listen(3000);
-    console.log('Connection established. Server is running...');
   })
-  .catch(err => console.error(err));
+  .catch(err => {
+    console.log(err);
+  });
